@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body onload="next('myTurn')">
+        <h1>Tic Tac Toe!</h1>
+        <h3 id="myTurn"> </h3>
+
+
+        
+        <table id="grid">
+            <tr>
+                <td><button class="spot" id="1x1" onclick="mark(this.id, 0)"> </button></td>
+                <td><button class="spot" id="1x2" onclick="mark(this.id, 1)"> </button></td>
+                <td><button class="spot" id="1x3" onclick="mark(this.id, 2)"> </button></td>
+            </tr>
+            <tr>
+                <td><button class="spot" id="2x1" onclick="mark(this.id, 3)"> </button></td>
+                <td><button class="spot" id="2x2" onclick="mark(this.id, 4)"> </button></td>
+                <td><button class="spot" id="2x3" onclick="mark(this.id, 5)"> </button></td>
+            </tr>
+            <tr>
+                <td><button class="spot" id="3x1" onclick="mark(this.id, 6)"> </button></td>
+                <td><button class="spot" id="3x2" onclick="mark(this.id, 7)"> </button></td>
+                <td><button class="spot" id="3x3" onclick="mark(this.id, 8)"> </button></td>
+            </tr>
+        </table>
+
+        <script>
+
+            var XO = Math.floor(Math.random()*2);
+                
+            /*
+            next:
+            input: id of a header element
+            purpose: display which player's turn it is
+            returns: none
+            */
+            function next(hId){
+                document.getElementById(hId).innerText = "player " + turn() + "'s turn";
+            }
+
+            /*
+            turn:
+            input: none
+            purpose: figure out which player's turn it is
+            returns: the letter of the current player
+            */
+            function turn(){
+                var t;
+                if(XO%2==0){
+                    t = "X";
+                }
+                if(XO%2!=0){
+                    t = "O";
+                }
+                return t;
+            }
+
+            var spaces = [];
+            
+            /*
+            space:
+            input: none
+            purpose: constructor for space object
+            returns: none
+            */
+            function space(){
+                this.piece = " ";
+            }
+
+            for(i=0;i<9;i++){
+                spaces.push(new space);
+            }
+           
+            /*
+            mark:
+            input: id of button/playable spot, index in the array of space objects
+            purpose: places an X or O at the clicked spot, then prevents it from being clicked again
+            returns: none
+            */
+            function mark(boxId, index){
+                if(XO%2==0){
+                    spaces[index].piece = "X";
+                }
+                if(XO%2!=0){
+                    spaces[index].piece = "O";
+                }
+                
+                document.getElementById(boxId).innerText = spaces[index].piece;
+                document.getElementById(boxId).disabled = true;
+
+                XO++;
+                checker();
+                
+            }
+
+            /*
+            checker:
+            input: none
+            purpose: checks for winning conditions
+            returns: none
+            */
+            function checker(){
+                for(s=0;s<9;s++){
+                    if(spaces[0].piece == spaces[1].piece && spaces[1].piece == spaces[2].piece 
+                    && spaces[0].piece != " " && spaces[1].piece != " " && spaces[2].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('1x1','1x2','1x3');
+                        disable();
+                    }
+                    else if(spaces[0].piece == spaces[3].piece && spaces[3].piece == spaces[6].piece 
+                    && spaces[0].piece != " " && spaces[3].piece != " " && spaces[6].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('1x1','2x1','3x1');
+                        disable();
+                    }
+                    else if(spaces[0].piece == spaces[4].piece && spaces[4].piece == spaces[8].piece 
+                    && spaces[0].piece != " " && spaces[4].piece != " " && spaces[8].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('1x1','2x2','3x3');
+                        disable();
+                    }
+                    else if(spaces[1].piece == spaces[4].piece && spaces[4].piece == spaces[7].piece 
+                    && spaces[1].piece != " " && spaces[4].piece != " " && spaces[7].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('1x2','2x2','3x2');
+                        disable();
+                    }
+                    else if(spaces[2].piece == spaces[5].piece && spaces[5].piece == spaces[8].piece && spaces[2].piece != " "
+                    && spaces[2].piece != " " && spaces[5].piece != " " && spaces[8].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('1x3','2x3','3x3');
+                        disable();
+                    }
+                    else if(spaces[2].piece == spaces[4].piece && spaces[4].piece == spaces[6].piece 
+                    && spaces[2].piece != " " && spaces[4].piece != " " && spaces[6].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('1x3','2x2','3x1');
+                        disable();
+                    }
+                    else if(spaces[3].piece == spaces[4].piece && spaces[4].piece == spaces[5].piece
+                     && spaces[3].piece != " " && spaces[4].piece != " " && spaces[5].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('2x1','2x2','2x3');
+                        disable();
+                    }
+                    else if(spaces[6].piece == spaces[7].piece && spaces[7].piece == spaces[8].piece
+                    && spaces[6].piece != " " && spaces[7].piece != " " && spaces[8].piece != " ") {
+                        XO++;
+                        document.getElementById('myTurn').innerText = "player " + turn() + " wins!"
+                        greenize('3x1','3x2','3x3');
+                        disable();
+                    }
+                    else if(spaces[0].piece != " "
+                    && spaces[1].piece != " "
+                    && spaces[2].piece != " "
+                    && spaces[3].piece != " "
+                    && spaces[4].piece != " "
+                    && spaces[5].piece != " "
+                    && spaces[6].piece != " "
+                    && spaces[7].piece != " "
+                    && spaces[8].piece != " "){
+                        document.getElementById('myTurn').innerText = "draw!"
+                        redize();
+                    }
+                    else {
+                        next('myTurn');
+                        
+                    }
+                }
+            }
+
+            /*
+            disable:
+            input: none
+            purpose: prevents all spots from being clicked (in the event of a win) 
+            returns: none
+            */
+            function disable(){
+                document.getElementById('1x1').disabled = true;
+                document.getElementById('1x2').disabled = true;
+                document.getElementById('1x3').disabled = true;
+                document.getElementById('2x1').disabled = true;
+                document.getElementById('2x2').disabled = true;
+                document.getElementById('2x3').disabled = true;
+                document.getElementById('3x1').disabled = true;
+                document.getElementById('3x2').disabled = true;
+                document.getElementById('3x3').disabled = true;
+            }
+
+            /*
+            space:
+            input: none
+            purpose: turns the winning spaces green
+            returns: none
+            */
+            function greenize(b1, b2, b3){
+                document.getElementById(b1).style.backgroundColor = "#90EE90"; 
+                document.getElementById(b2).style.backgroundColor = "#90EE90";
+                document.getElementById(b3).style.backgroundColor = "#90EE90";
+            }
+
+            /*
+            space:
+            input: none
+            purpose: turns all spaces red (in the event of a draw)
+            returns: none
+            */
+            function redize(){
+                document.getElementById('1x1').style.backgroundColor = "#f1807e";
+                document.getElementById('1x2').style.backgroundColor = "#f1807e";
+                document.getElementById('1x3').style.backgroundColor = "#f1807e";
+                document.getElementById('2x1').style.backgroundColor = "#f1807e";
+                document.getElementById('2x2').style.backgroundColor = "#f1807e";
+                document.getElementById('2x3').style.backgroundColor = "#f1807e";
+                document.getElementById('3x1').style.backgroundColor = "#f1807e";
+                document.getElementById('3x2').style.backgroundColor = "#f1807e";
+                document.getElementById('3x3').style.backgroundColor = "#f1807e";
+            }
+
+
+
+        </script>
+
+        <button id="newGame" onclick="window.location.reload()">New Game</button>
+
+    </body>
+</html>

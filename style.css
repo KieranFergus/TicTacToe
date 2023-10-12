@@ -1,0 +1,39 @@
+h1, h3 {
+    text-align: center;
+}
+
+#grid {
+    margin: auto;
+    border: 2px solid;
+}
+
+#grid button {
+    width: 140px;
+    height: 140px;
+    background-color: #fff;
+    font-size: 80px;
+    font-weight: bold;
+    transition: 0.1s;
+}
+
+#grid button:hover {
+    background-color: #e8e8e8;
+}
+
+#newGame {
+    margin-top: 10px;
+    margin-left: 42%;
+    width: 110px;
+    background-color: #50C878;
+    color:antiquewhite;
+    font-size: 20px;
+    border-radius: 10%;
+    padding: 5px;
+    transition: 0.15s;
+}
+
+#newGame:hover {
+    transform: scale(1.1,1.1);
+    background-color: #009000;
+}
+
